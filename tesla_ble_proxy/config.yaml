@@ -1,0 +1,23 @@
+name: Tesla BLE Proxy
+version: "0.1.0"
+slug: tesla_ble_proxy
+description: Local Bluetooth charging-control proxy for Tesla vehicles and evcc.
+url: "https://github.com/wimaha/TeslaBleHttpProxy"
+arch:
+  - aarch64
+  - armv7
+startup: application
+boot: manual
+init: false
+host_network: true
+host_dbus: true
+privileged:
+  - NET_ADMIN
+  - SYS_ADMIN
+apparmor: false
+map:
+  - addon_config:rw
+options:
+  log_level: info
+schema:
+  log_level: list(trace|debug|info|warning|error)
