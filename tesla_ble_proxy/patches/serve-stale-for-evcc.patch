@@ -1,0 +1,10 @@
+diff --git a/internal/api/handlers/tesla.go b/internal/api/handlers/tesla.go
+--- a/internal/api/handlers/tesla.go
++++ b/internal/api/handlers/tesla.go
+@@ -8,0 +9 @@
++	"os"
+@@ -236 +237,3 @@
+-	fetchVehicleData(r.Context(), bc, vin, endpoints, cacheTime, r.URL.Query().Get("wakeup") == "true", r.URL.Query().Get("allow_stale") == "true", &response)
++	allowStale := r.URL.Query().Get("allow_stale") == "true" ||
++		os.Getenv("TESLA_BLE_PROXY_SERVE_STALE_WHEN_ASLEEP") == "true"
++	fetchVehicleData(r.Context(), bc, vin, endpoints, cacheTime, r.URL.Query().Get("wakeup") == "true", allowStale, &response)

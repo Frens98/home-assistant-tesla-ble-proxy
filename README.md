@@ -39,8 +39,25 @@ Because this is a Home Assistant app repository, a newer release is shown in
 the Home Assistant app store after a version change is pushed here. Update it
 there in the usual way; pairing keys remain on the Pi.
 
+## Tesla asleep and EVCC 503 responses
+
+This app builds upstream TeslaBleHttpProxy from the pinned commit used by
+[upstream PR #180](https://github.com/wimaha/TeslaBleHttpProxy/pull/180), plus
+a small wrapper patch that enables its stale-cache behavior for EVCC. EVCC
+doesn't currently send the PR's `allow_stale=true` query parameter itself.
+
+When the proxy positively detects that the Tesla is asleep, it can return
+cached `vehicle_data` up to 24 hours old instead of HTTP 503. The response is
+marked `stale` and includes its cache age, but EVCC may ignore those fields and
+show the last SOC/status as current. The cache is in memory and is lost when
+the app restarts. Missing cache, expired cache, or ordinary BLE failures (for
+example, the car being out of range) still return an error; they are not
+treated as a sleeping car.
+
 ## Scope
 
 This is a small packaging wrapper around the upstream project. Tesla BLE
-protocol support and proxy behaviour are maintained upstream at
-[wimaha/TeslaBleHttpProxy](https://github.com/wimaha/TeslaBleHttpProxy).
+protocol support and core proxy behavior are maintained at
+[wimaha/TeslaBleHttpProxy](https://github.com/wimaha/TeslaBleHttpProxy); this
+app currently pins PR #180 and applies a small wrapper patch so EVCC can use
+its bounded stale-cache behavior without sending a custom query parameter.

@@ -1,8 +1,8 @@
 name: Tesla BLE Proxy
-version: "0.1.3"
+version: "0.1.4"
 slug: tesla_ble_proxy
 description: Local Bluetooth charging-control proxy for Tesla vehicles and evcc.
-url: "https://github.com/wimaha/TeslaBleHttpProxy"
+url: "https://github.com/Frens98/home-assistant-tesla-ble-proxy"
 arch:
   - aarch64
   - armv7
